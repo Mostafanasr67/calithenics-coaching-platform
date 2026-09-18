@@ -11,9 +11,9 @@ exports.signup = async (req, res, next)  => {
 		const error = new Error("Validation failed.");
 		error.statusCode = 422;
 		error.data = errors.array();
-		throw error;
+		return next(error);
 	}
-	const email = req.body.email;
+	const email = req.body.email.toLowerCase().trim();
 	const password = req.body.password;
 	const name = req.body.name;
 	
@@ -35,7 +35,25 @@ exports.signup = async (req, res, next)  => {
 		});
 		
 		const result = await user.save();
-		res.status(201).json({ message: "User created!", userId: result._id });
+		
+		// Generate JWT token for new user
+if (!process.env.JWT_SECRET) {
+            const error = new Error("Server configuration error: JWT_SECRET not set");
+            error.statusCode = 500;
+            throw error;
+        }
+        const token = jwt.sign(
+            { email: result.email, userId: result._id.toString() },
+            process.env.JWT_SECRET,
+			{ expiresIn: "1h" }
+		);
+		
+		res.status(201).json({ 
+			message: "User created!", 
+			userId: result._id,
+			token: token,
+			role: result.role || "client"
+		});
 	} catch (err) {
 		if (!err.statusCode) {
 			err.statusCode = 500;
@@ -51,10 +69,10 @@ exports.login = async (req, res, next) => {
         const error = new Error("Validation failed.");
         error.statusCode = 422;
         error.data = errors.array();
-        throw error;
+        return next(error);
     }
 
-    const email = req.body.email;
+    const email = req.body.email.toLowerCase().trim();
     const password = req.body.password;
     let loadedUser;
     try {
@@ -71,9 +89,14 @@ exports.login = async (req, res, next) => {
             error.statusCode = 401;
             throw error;
         }
+        if (!process.env.JWT_SECRET) {
+            const error = new Error("Server configuration error: JWT_SECRET not set");
+            error.statusCode = 500;
+            throw error;
+        }
         const token = jwt.sign(
             { email: loadedUser.email, userId: loadedUser._id.toString() },
-            "somesupersecretkey",
+            process.env.JWT_SECRET,
             { expiresIn: "1h" }
         );
 

@@ -1,8 +1,91 @@
-# Getting Started with Create React App
+# Calisthenics Coaching Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack web application for managing calisthenics training programs. Built with React, Tailwind CSS, Node.js, Express, and MongoDB.
 
-## Available Scripts
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 14+ and npm
+- MongoDB Atlas account (or local MongoDB)
+- Git
+
+### Installation and Setup
+
+#### 1. Clone the repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/cali-website.git
+cd cali-website
+```
+
+#### 2. Install frontend dependencies
+
+```bash
+cd "Front End"
+npm install
+```
+
+#### 3. Install backend dependencies
+
+```bash
+cd "../Back End"
+npm install
+```
+
+#### 4. Configure environment variables
+
+Create a `.env` file in the `Back End` directory (copy from `.env.example`):
+
+```
+PORT=8080
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/database
+JWT_SECRET=your_secure_jwt_secret_key_change_in_production
+```
+
+**Important:** Never commit `.env` to GitHub. It's already in `.gitignore`.
+
+#### 5. Run the application
+
+**Backend** (from `Back End` directory):
+```bash
+npm start
+```
+
+**Frontend** (from `Front End` directory, new terminal):
+```bash
+npm start
+```
+
+The app will open at `http://localhost:3000`
+
+## 📁 Project Structure
+
+```
+cali-website/
+├── Front End/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── context/
+│   │   ├── utils/
+│   │   └── App.js
+│   ├── package.json
+│   └── tailwind.config.js
+├── Back End/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── middleware/
+│   ├── app.js
+│   ├── package.json
+│   └── .env (not in repo)
+└── PROJECT_DOCUMENTATION.md
+```
+
+## 📝 Available Scripts
+
+### Frontend Scripts
 
 In the project directory, you can run:
 

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -40,10 +41,10 @@ app.use((err, req, res, next) => {
     res.status(status).json({ message: message, data: data });
 });
 
-mongoose.connect('mongodb+srv://mostafanasr67:Made2be%402@cluster0.lshfpb6.mongodb.net/cali?appName=Cluster0')
+mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
     console.log('Connected to MongoDB');
-    app.listen(8080, () => console.log('Server running on port 8080'));
+    app.listen(process.env.PORT || 8080, () => console.log(`Server running on port ${process.env.PORT || 8080}`));
 }).catch(err => {
     console.log('MongoDB connection error:', err);
 });
