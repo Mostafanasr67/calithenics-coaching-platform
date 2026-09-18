@@ -90,14 +90,14 @@ cd calisthenics-coaching-platform
 ### 2. Install frontend dependencies
 
 ```bash
-cd frontend
+cd Front End
 npm install
 ```
 
 ### 3. Install backend dependencies
 
 ```bash
-cd ../backend
+cd ../Back End
 npm install
 ```
 
